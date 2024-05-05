@@ -1,7 +1,7 @@
 # Meeting Summary with OpenAI - STREAMLIT
 Desenvolvido por: Valentim Uliana
 
-Essa aplicação tem como intuito a facilitação no dia-dia de quem faz muitas reuniões, onde a partir de uma gravação de reunião, é possível gerar um resumo usando o ChatGPT e trazer tudo que foi acordado numa reunião, desde tópicos abordados até  próximos passos.
+Essa aplicação tem como intuito a facilitação no dia-dia de quem faz muitas reuniões, onde a partir de reunião, é possível gerar um resumo usando o ChatGPT e trazer tudo que foi acordado numa reunião, desde tópicos abordados até  próximos passos.
 
 # Requisitos
    Python 3.8+ (para caso queira ver e rodar o código atráves de um IDE)<br>
@@ -9,13 +9,16 @@ Essa aplicação tem como intuito a facilitação no dia-dia de quem faz muitas 
    [OpenAI](https://platform.openai.com/docs/introduction) - Utilizado a API do OpenAI para fazer o resumo das reuniões (para isso foi pago, por exemplo, eu comprei $5 e já upei mais de 50 reuniões e ainda tenho créditos)<br>
    Use: <b>pip install -r requirements.txt</b> para instalar as bibliotecas necessárias<br>
 
-# Como utilizar
-1. Primeiramente, é ter o consentimento para gravar uma reunião
-2. Os arquivos criados vão todos para uma pasta chamada <b>.MeetGPT_v2</b> na pasta HOME do usuário do sistema operacional (ex: Windows vai para <b>C:\Users\Valentim-Home</b>), dentro dessa pasta será criada a pasta das reuniões que vai conter todas as reuniões salvas com resumo, titulo, audio convertido e a transcrição.
-3. Baixar e extrair o modelo VOSK na pasta principal <b>.MeetGPT/models</b>. No meu caso estou usando esse para PT-BR: [vosk-model-pt-fb](https://alphacephei.com/vosk/models/vosk-model-pt-fb-v0.1.1-pruned.zip)
-4. Colocar sua chave de API do OpenAI na linha 90 do códgio em "YOUR_OPENAI_API_KEY". [Para pegar sua chave API](https://platform.openai.com/api-keys)
-5. A aplicação vai transformar o MP4 em áudio, transcrever esse aúdio para texto usando o VOSK e com esse texto mandar para um prompt do OpenAI para fazer um resumo com as pré-definições que eu fiz na linha 18 do código (pode ser alterado de acordo com cada necessidade)
-   ```
+# Features
+1. Pode fazer o upload de um arquivo MP4, gravado de uma reunião
+2. Gravação nativa do sistema operacional na saída e entrada de aúdio (real-time).
+3. Interface amigável
+4. Pode ver os resumos direto na interface
+5. Arquivo de configuração, para setar chave API e tempo de gravação mínimo de uma reunião (padrão 1 min). Esse arquivo fica em: MeetGPTv2/config
+6. Arquivo com prompt com as pré-definições para fazer o resumo junto ao ChatGPT.
+
+<b>Prompt padrão:</b>
+```
    PROMPT = '''
       Somos da empresa Yssy, empresa de tecnologia que atende diversas frentes.
       Faça o resumo do texto delimitado por #### 
@@ -59,9 +62,17 @@ Essa aplicação tem como intuito a facilitação no dia-dia de quem faz muitas 
       texto: ####{}####
       '''
    ```
-6. A aplicação foi feita em Python utilizando o streamlit, então para iniciá-la basta rodar o comando (depende do IDE e sistema operacional que vc irá utilizar) : <b>```streamlit run .\meeting_summarizer_openai.py --server.maxUploadSize 700```</b>
-7. Basta upar a reunião (aceita por enquanto somente arquivos .mp4) e clicar em gerar resumo.
-8. Após a reunião tiver um resumo pronto, ele vai para a TAB <b>"Ver Resumos de reuniões"</b> onde você deve salvar o título da reunião dando um nome para ela. Após isso a reunião vai aparecer para você já resumida.
+   
+# Como utilizar
+1. Primeiramente, é ter o consentimento para gravar uma reunião
+2. Os arquivos criados vão todos para uma pasta chamada <b>.MeetGPTv2</b> na pasta HOME do usuário do sistema operacional (ex: Windows vai para <b>C:\Users\Valentim-Home</b>), dentro dessa pasta será criada a pasta das reuniões que vai conter todas as reuniões salvas com resumo, titulo, audio convertido e a transcrição.
+3. Na primeira vez que rodar a aplicação, vai ser pedido para informar a sua chave de API do OpenAI. Caso tenha colocado errado é possivel editar no arquivo de configuração. [Para pegar sua chave API](https://platform.openai.com/api-keys)
+4. Módulos da aplicação<br>
+   <b>a) Conversão de arquivo MP4:</b> A aplicação vai transformar o MP4 em áudio, transcrever esse aúdio para texto usando o modelo whisper-1 do OpenAI e depois fazer um resumo usando o ChatGPT. O título da reunião é obrigatório.<br>
+   <b>b) Gravação de aúdio em real-time:</b> A aplicação vai gravar o áudio do seu computador, transcrever esse aúdio para texto usando o modelo whisper-1 do OpenAI e depois fazer um resumo usando o ChatGPT. O título da reunião é obrigatório.<br>
+6. Foi usado um pyinstaller para gerar o .exe dessa aplicação, basta iniciar o arquivo meetingsummarize.exe para começar a usá-la.
+7. Caso não queira usar o .exe, basta rodar a aplicação com o python ``` python ./meetingsummarize.py ```
+9. Após a reunião tiver um resumo pronto, sendo ela convertida de um mp4 ou sendo gravada em real-time, ele vai para a ABA <b>"Ver Resumos"</b>. Após isso a reunião vai aparecer para você já resumida.
 
 #Imagens
 <img src="images/meet1.png"><br><br>

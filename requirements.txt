@@ -1,0 +1,14 @@
+pydub
+pillow
+requests
+customtkinter
+threaded
+moviepy
+Wave
+openai
+pathlib
+PyAudio
+configparser
+shutils
+py-splash
+tk
